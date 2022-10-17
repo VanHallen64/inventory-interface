@@ -77,9 +77,16 @@ ul {
   background-color: #ebebeb;
   width: fit-content;
   height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .navbar li {
   display: block;
   width: 150px;
+}
+
+.menu-text {
+  display: none;
 }

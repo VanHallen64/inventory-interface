@@ -4,10 +4,9 @@ import './App.css';
 
 import Navbar from '../components/Navbar';
 
-const Hello = () => {
+const Main = () => {
   return (
     <div>
-      <Navbar />
       <div className="Hello">
         <img width="200" alt="icon" src={icon} />
       </div>
@@ -39,6 +38,7 @@ const Hello = () => {
           </button>
         </a>
       </div>
+      <Navbar />
     </div>
   );
 };
@@ -47,7 +47,7 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Hello />} />
+        <Route path="/" element={<Main />} />
         {/* <Route path="/" element={<Home />} />
           <Route path="/" element={<Search />} />
           <Route path="/" element={<Components />} />
