@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
 import $ from 'jquery';
@@ -11,7 +12,25 @@ import {
   faTableList,
 } from '@fortawesome/free-solid-svg-icons';
 
+function menuToggle(e) {
+  e.preventDefault();
+  console.log(e.currentTarget.style);
+
+  //   if (visible) {
+  //     $text.slideUp('fast', function () {
+  //       $text.addClass('hide').slideDown(0);
+  //     });
+  //   } else {
+  //     $text.slideUp(0, function () {
+  //       $text.removeClass('hide').slideDown('fast');
+  //     });
+  //   }
+  //   visible = !visible;
+  // });
+}
+
 const Navbar = () => {
+  const [visible, setVisible] = useState(false);
   const activeStyle = {
     textDecoration: 'underline',
   };
@@ -22,7 +41,18 @@ const Navbar = () => {
     <div>
       <ul className="navbar">
         <li>
-          <button type="button" id="menu-button">
+          <button
+            type="button"
+            id="menu-button"
+            onClick={(e) => {
+              setVisible(!visible);
+              if (visible) {
+                $('.menu-text').hide();
+              } else {
+                $('.menu-text').show();
+              }
+            }}
+          >
             <FontAwesomeIcon icon={faBars} />
           </button>
         </li>
@@ -34,7 +64,7 @@ const Navbar = () => {
             }
           >
             <FontAwesomeIcon icon={faMagnifyingGlass} />
-            &nbsp; <span className="menu-text">Search</span>
+            <span className="menu-text">&nbsp; Search</span>
           </NavLink>
         </li>
         <li>
@@ -83,26 +113,5 @@ const Navbar = () => {
     </div>
   );
 };
-
-function menuToggle(e) {
-  e.preventDefault();
-  console.log(e);
-  // let $button = $('#myButton'),
-  //   $text = $('#myText'),
-  //   visible = true;
-
-  // $button.click(function() {
-  //   if (visible) {
-  //     $text.slideUp('fast', function () {
-  //       $text.addClass('hide').slideDown(0);
-  //     });
-  //   } else {
-  //     $text.slideUp(0, function () {
-  //       $text.removeClass('hide').slideDown('fast');
-  //     });
-  //   }
-  //   visible = !visible;
-  // });
-}
 
 export default Navbar;

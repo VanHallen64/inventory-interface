@@ -90,3 +90,7 @@ ul {
 .menu-text {
   display: none;
 }
+
+#menu-button {
+  display: block;
+}
