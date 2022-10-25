@@ -1,10 +1,10 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+import Search from 'components/Search';
+import Navbar from '../components/Navbar';
 import icon from '../../assets/icon.svg';
 import './App.css';
 
-import Navbar from '../components/Navbar';
-
-const Main = () => {
+const Home = () => {
   return (
     <div>
       <div className="Hello">
@@ -38,7 +38,6 @@ const Main = () => {
           </button>
         </a>
       </div>
-      <Navbar />
     </div>
   );
 };
@@ -46,10 +45,11 @@ const Main = () => {
 export default function App() {
   return (
     <Router>
+      <Navbar />
       <Routes>
-        <Route path="/" element={<Main />} />
-        {/* <Route path="/" element={<Home />} />
-          <Route path="/" element={<Search />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/search" element={<Search />} />
+        {/*
           <Route path="/" element={<Components />} />
           <Route path="/" element={<Import />} />
           <Route path="/" element={<Asset />} /> */}

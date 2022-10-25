@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
 import $ from 'jquery';
@@ -12,27 +12,17 @@ import {
   faTableList,
 } from '@fortawesome/free-solid-svg-icons';
 
-function menuToggle(e) {
-  e.preventDefault();
-  console.log(e.currentTarget.style);
-
-  //   if (visible) {
-  //     $text.slideUp('fast', function () {
-  //       $text.addClass('hide').slideDown(0);
-  //     });
-  //   } else {
-  //     $text.slideUp(0, function () {
-  //       $text.removeClass('hide').slideDown('fast');
-  //     });
-  //   }
-  //   visible = !visible;
-  // });
+function addActiveClass(a: any, b: any) {
+  console.log(a);
+  // $(`.${className}`).addClass('menu-active');
+  return undefined;
 }
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
   const activeStyle = {
-    textDecoration: 'underline',
+    color: 'black',
+    backgroundColor: 'white',
   };
 
   const activeClassName = 'underline';
@@ -42,70 +32,63 @@ const Navbar = () => {
       <ul className="navbar">
         <li>
           <button
+            title="menu-button"
             type="button"
             id="menu-button"
             onClick={(e) => {
               setVisible(!visible);
               if (visible) {
-                $('.menu-text').hide();
+                $('.menu-text').css('display', 'none');
               } else {
-                $('.menu-text').show();
+                $('.menu-text').css('display', 'inline');
               }
             }}
           >
-            <FontAwesomeIcon icon={faBars} />
+            <FontAwesomeIcon icon={faBars} size="2xl" />
           </button>
         </li>
         <li>
           <NavLink
             to="search"
-            className={({ isActive }) =>
-              isActive ? activeClassName : undefined
-            }
+            className={({ isActive }) => (isActive ? 'selected' : 'unselected')}
           >
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
+            <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" />
             <span className="menu-text">&nbsp; Search</span>
           </NavLink>
         </li>
         <li>
           <NavLink
             to="home"
-            style={({ isActive }) => (isActive ? activeStyle : {})}
+            className={({ isActive }) => (isActive ? 'selected' : 'unselected')}
           >
-            <FontAwesomeIcon icon={faHouse} />
+            <FontAwesomeIcon icon={faHouse} size="2xl" />
             &nbsp; <span className="menu-text">Home</span>
           </NavLink>
         </li>
         <li>
           <NavLink
             to="import"
-            className={({ isActive }) =>
-              isActive ? activeClassName : undefined
-            }
+            className={({ isActive }) => (isActive ? 'selected' : 'unselected')}
           >
-            <FontAwesomeIcon icon={faRightToBracket} />
+            <FontAwesomeIcon icon={faRightToBracket} size="2xl" />
             &nbsp; <span className="menu-text">Import</span>
           </NavLink>
         </li>
         <li>
           <NavLink
             to="components"
-            className={({ isActive }) =>
-              isActive ? activeClassName : undefined
-            }
+            className={({ isActive }) => (isActive ? 'selected' : 'unselected')}
           >
-            <FontAwesomeIcon icon={faMicrochip} />
+            <FontAwesomeIcon icon={faMicrochip} size="2xl" />
             &nbsp; <span className="menu-text">Components</span>
           </NavLink>
         </li>
         <li>
           <NavLink
-            to="Asset"
-            className={({ isActive }) =>
-              isActive ? activeClassName : undefined
-            }
+            to="asset"
+            className={({ isActive }) => (isActive ? 'selected' : 'unselected')}
           >
-            <FontAwesomeIcon icon={faTableList} />
+            <FontAwesomeIcon icon={faTableList} size="2xl" />
             &nbsp; <span className="menu-text">Asset</span>
           </NavLink>
         </li>
