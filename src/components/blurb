@@ -1,0 +1,55 @@
+/* <button
+      //   title="menu-button"
+      //   type="button"
+      //   id="menu-button"
+      //   onClick={(e) => {
+      //     setVisible(!visible);
+      //     if (visible) {
+      //       $('.menu-text').css('display', 'none');
+      //     } else {
+      //       $('.menu-text').css('display', 'inline');
+      //     }
+      //   }}
+      // >
+      //   <FontAwesomeIcon icon={faBars} size="xl" />
+      // </button>
+      <SidebarMenuNav>
+        <SidebarMenuNavLink>
+          <NavLink
+            to="search"
+            className={({ isActive }) => (isActive ? 'selected' : 'unselected')}
+          >
+            <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" />
+            <span className="menu-text">&nbsp; Search</span>
+          </NavLink>
+        </SidebarMenuNavLink>
+        <NavLink
+          to="home"
+          className={({ isActive }) => (isActive ? 'selected' : 'unselected')}
+        >
+          <FontAwesomeIcon icon={faHouse} size="2xl" />
+          &nbsp; <span className="menu-text">Home</span>
+        </NavLink>
+        <NavLink
+          to="import"
+          className={({ isActive }) => (isActive ? 'selected' : 'unselected')}
+        >
+          <FontAwesomeIcon icon={faRightToBracket} size="2xl" />
+          &nbsp; <span className="menu-text">Import</span>
+        </NavLink>
+        <NavLink
+          to="components"
+          className={({ isActive }) => (isActive ? 'selected' : 'unselected')}
+        >
+          <FontAwesomeIcon icon={faMicrochip} size="2xl" />
+          &nbsp; <span className="menu-text">Components</span>
+        </NavLink>
+        <NavLink
+          to="asset"
+          className={({ isActive }) => (isActive ? 'selected' : 'unselected')}
+        >
+          <FontAwesomeIcon icon={faTableList} size="2xl" />
+          &nbsp; <span className="menu-text">Asset</span>
+        </NavLink>
+      </SidebarMenuNav>
+    </SidebarMenu> */

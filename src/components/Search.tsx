@@ -1,5 +1,9 @@
 const Search = () => {
-  return <h1>Search Component</h1>;
+  return (
+    <div className="page-wrapper col">
+      <h1>Search Component</h1>
+    </div>
+  );
 };
 
 export default Search;
