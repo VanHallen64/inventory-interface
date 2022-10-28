@@ -15,12 +15,13 @@ body {
   color: white;
   height: 100vh;
   background: linear-gradient(
-    200.96deg,
-    #fedc2a -29.09%,
-    #dd5789 51.77%,
-    #7a2c9e 129.35%
-  );
-  font-family: sans-serif;
+      200.96deg,
+      #fedc2a -29.09%,
+      #dd5789 51.77%,
+      #7a2c9e 129.35%
+    )
+    fixed;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
 #root {
@@ -60,4 +61,23 @@ body {
 
 .selected {
   color: rgb(203, 203, 203);
+}
+
+/*** SECTIONS ***/
+.block {
+  display: block;
+  border: 1px solid lightgray;
+  height: 200px;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+#search-bar {
+  display: flex;
+}
+
+.main-container {
+  display: grid;
+  padding: 30px;
 }

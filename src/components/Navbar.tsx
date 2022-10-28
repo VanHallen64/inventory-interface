@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import SidebarMenu from 'react-bootstrap-sidebar-menu';
 
 import {
-  faBars,
   faHouse,
   faMagnifyingGlass,
   faMicrochip,
