@@ -141,8 +141,10 @@ async function search(type, item) {
     connection = await oracledb.getConnection(dbConfig);
     const result = await connection.execute(query);
     console.log(result.rows);
+    return result.rows;
   } catch (err) {
     console.error(err);
+    return null;
   } finally {
     if (connection) {
       try {
@@ -154,4 +156,4 @@ async function search(type, item) {
   }
 }
 
-search('ip', '10.2.39.173');
+module.exports = { search };
