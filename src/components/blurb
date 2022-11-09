@@ -1,55 +1,18 @@
-/* <button
-      //   title="menu-button"
-      //   type="button"
-      //   id="menu-button"
-      //   onClick={(e) => {
-      //     setVisible(!visible);
-      //     if (visible) {
-      //       $('.menu-text').css('display', 'none');
-      //     } else {
-      //       $('.menu-text').css('display', 'inline');
-      //     }
-      //   }}
-      // >
-      //   <FontAwesomeIcon icon={faBars} size="xl" />
-      // </button>
-      <SidebarMenuNav>
-        <SidebarMenuNavLink>
-          <NavLink
-            to="search"
-            className={({ isActive }) => (isActive ? 'selected' : 'unselected')}
-          >
-            <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" />
-            <span className="menu-text">&nbsp; Search</span>
-          </NavLink>
-        </SidebarMenuNavLink>
-        <NavLink
-          to="home"
-          className={({ isActive }) => (isActive ? 'selected' : 'unselected')}
-        >
-          <FontAwesomeIcon icon={faHouse} size="2xl" />
-          &nbsp; <span className="menu-text">Home</span>
-        </NavLink>
-        <NavLink
-          to="import"
-          className={({ isActive }) => (isActive ? 'selected' : 'unselected')}
-        >
-          <FontAwesomeIcon icon={faRightToBracket} size="2xl" />
-          &nbsp; <span className="menu-text">Import</span>
-        </NavLink>
-        <NavLink
-          to="components"
-          className={({ isActive }) => (isActive ? 'selected' : 'unselected')}
-        >
-          <FontAwesomeIcon icon={faMicrochip} size="2xl" />
-          &nbsp; <span className="menu-text">Components</span>
-        </NavLink>
-        <NavLink
-          to="asset"
-          className={({ isActive }) => (isActive ? 'selected' : 'unselected')}
-        >
-          <FontAwesomeIcon icon={faTableList} size="2xl" />
-          &nbsp; <span className="menu-text">Asset</span>
-        </NavLink>
-      </SidebarMenuNav>
-    </SidebarMenu> */
+const columns = ` ASSETS.ASSET_PO, ASSETS.ASSET_NAME, ASSETS.ASSET_ID,
+ASSETS.ASSET_SERIAL_NUMBER, IP_TABLE.IP_MAC_ADDRESS, IP_TABLE.IP,
+ASSET_CATEGORIES.ASSET_CATEGORY_DESC, ASSETS.ASSET_MODEL_2, PEOPLE.NAME,
+DEPT.DEPARTMENT, LOCATIONS.ASSET_ROOM, ASSETS.ASSET_STATUS`; const query =
+`SELECT ${columns} FROM (((((INVDBMGR.ASSETS INNER JOIN INVDBMGR.LOCATIONS ON
+ASSETS.ASSET_ID = LOCATIONS.ASSET_ID) INNER JOIN INVDBMGR.PEOPLE ON
+LOCATIONS.ASSET_EMPLOYEE = PEOPLE.PIDM_CODE) INNER JOIN INVDBMGR.DEPT ON
+LOCATIONS.ASSET_DEPARTMENT_CODE = DEPT.DEPARTMENT_CODE) INNER JOIN
+INVDBMGR.ASSET_CATEGORIES ON ASSETS.ASSET_CATEGORY_CODE =
+ASSET_CATEGORIES.ASSET_CATEGORY_CODE) INNER JOIN INVDBMGR.COMPONENTS ON
+ASSETS.ASSET_ID = COMPONENTS.ASSET_ID) INNER JOIN INVDBMGR.IP_TABLE ON
+COMPONENTS.COMPONENT_MAC_ADDRESS = IP_TABLE.IP_MAC_ADDRESS WHERE (((${field})
+Like '%${item}%'))`; const columns = ` VWSEARCH2.PO, VWSEARCH2.[Asset Name],
+VWSEARCH2.LIN, VWSEARCH2.Serial, MACIPSEARCH.MAC, MACIPSEARCH.IP,
+VWSEARCH2.Category, VWSEARCH2.Model, VWSEARCH2.User, VWSEARCH2.Department,
+VWSEARCH2.Room, VWSEARCH2.Status`; const query = `SELECT ${columns} FROM
+INVDBMGR.VWSEARCH2 INNER JOIN INVDBMGR.MACIPSEARCH ON VWSEARCH2.LIN =
+MACIPSEARCH.LIN WHERE (((${field}) Like '%${item}%'))`;

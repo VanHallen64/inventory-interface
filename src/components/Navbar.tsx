@@ -13,7 +13,7 @@ import {
 const Navbar = () => {
   return (
     <SidebarMenu expand={false} defaultExpanded={false} bg="light">
-      <SidebarMenu.Collapse getScrollValue="300px">
+      <SidebarMenu.Collapse getScrollValue="200px">
         <SidebarMenu.Header>
           <SidebarMenu.Toggle />
         </SidebarMenu.Header>

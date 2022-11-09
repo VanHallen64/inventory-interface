@@ -31,120 +31,77 @@ if (libPath && fs.existsSync(libPath)) {
 
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT;
 
-async function search(type, item) {
+async function search(filter, item) {
   let connection;
 
   let field;
 
-  let POCol = 'ASSETS.ASSET_PO,';
-  let NameCol = 'ASSETS.ASSET_NAME,';
-  let SerialNumberCol = 'ASSET_SERIAL_NUMBER,';
-  let IPCol = 'IP_TABLE.IP,';
-  let MACCol = 'IP_TABLE.IP_MAC_ADDRESS,';
+  // Used when searching for MAC or IP
+  let columnsNet = '';
+  let joinNetTable = '';
 
-  switch (type) {
+  switch (filter) {
     case 'lin':
-      field = 'ASSETS.ASSET_ID';
-      POCol = '';
-      NameCol = '';
-      MACCol = '';
-      IPCol = '';
+      field = 'VWSEARCH2."LIN"';
       break;
     case 'name':
-      field = 'ASSETS.ASSET_NAME';
-      SerialNumberCol = '';
-      POCol = '';
-      IPCol = '';
-      MACCol = '';
+      field = 'VWSEARCH2."Asset Name"';
       break;
     case 'model':
-      field = 'ASSETS.ASSET_MODEL_2';
-      POCol = '';
-      NameCol = '';
-      MACCol = '';
-      IPCol = '';
+      field = 'VWSEARCH2."Model"';
       break;
     case 'department':
-      field = 'DEPT.DEPARTMENT';
-      POCol = '';
-      NameCol = '';
-      MACCol = '';
-      IPCol = '';
+      field = 'VWSEARCH2."Department"';
       break;
     case 'po':
-      field = 'ASSETS.ASSET_PO';
-      SerialNumberCol = '';
-      NameCol = '';
-      IPCol = '';
-      MACCol = '';
+      field = 'VWSEARCH2."PO"';
       break;
     case 'serial':
-      field = 'ASSETS.ASSET_SERIAL_NUMBER';
-      POCol = '';
-      NameCol = '';
-      MACCol = '';
-      IPCol = '';
+      field = 'VWSEARCH2."Serial"';
       break;
     case 'room':
-      field = 'LOCATIONS.ASSET_ROOM';
-      POCol = '';
-      NameCol = '';
-      MACCol = '';
-      IPCol = '';
+      field = 'VWSEARCH2."Room"';
       break;
     case 'user':
-      field = 'PEOPLE.NAME';
-      POCol = '';
-      NameCol = '';
-      MACCol = '';
-      IPCol = '';
+      field = 'VWSEARCH2."User"';
       break;
     case 'ip':
-      field = 'IP_TABLE.IP';
-      SerialNumberCol = '';
-      POCol = '';
-      NameCol = '';
+      field = 'MACIPSEARCH."IP"';
+      columnsNet = `, MACIPSEARCH."MAC", MACIPSEARCH."IP"`;
+      joinNetTable = ` INNER JOIN INVDBMGR.MACIPSEARCH ON INVDBMGR.VWSEARCH2.LIN = INVDBMGR.MACIPSEARCH.LIN`;
       break;
     case 'mac':
-      field = 'IP_TABLE.IP_MAC_ADDRESS';
-      SerialNumberCol = '';
-      POCol = '';
-      NameCol = '';
+      field = 'MACIPSEARCH."MAC"';
+      columnsNet = `, MACIPSEARCH."MAC", MACIPSEARCH."IP"`;
+      joinNetTable = ` INNER JOIN INVDBMGR.MACIPSEARCH ON INVDBMGR.VWSEARCH2.LIN = INVDBMGR.MACIPSEARCH.LIN`;
       break;
     default:
-      field = 'ASSETS.ASSET_ID';
-      POCol = '';
-      NameCol = '';
-      MACCol = '';
-      IPCol = '';
+      field = 'VWSEARCH2."LIN"';
   }
 
   const columns = `
-	${POCol}
-	${NameCol}
-	ASSETS.ASSET_ID,
-	${SerialNumberCol}
-  ${MACCol}
-  ${IPCol}
-  ASSET_CATEGORIES.ASSET_CATEGORY_DESC,
-  ASSETS.ASSET_MODEL_2,
-  PEOPLE.NAME,
-  DEPT.DEPARTMENT,
-  LOCATIONS.ASSET_ROOM,
-  ASSETS.ASSET_STATUS`;
+  VWSEARCH2."LIN",
+  VWSEARCH2."Serial",
+  VWSEARCH2."Category",
+  VWSEARCH2."Model",
+  VWSEARCH2."Room",
+  VWSEARCH2."User",
+  VWSEARCH2."Department",
+  VWSEARCH2."Status",
+  VWSEARCH2."Asset Name",
+  VWSEARCH2."PO"
+  ${columnsNet}`;
 
   const query = `SELECT ${columns}
-	FROM (((((INVDBMGR.ASSETS INNER JOIN INVDBMGR.LOCATIONS ON ASSETS.ASSET_ID = LOCATIONS.ASSET_ID) INNER JOIN INVDBMGR.PEOPLE ON LOCATIONS.ASSET_EMPLOYEE = PEOPLE.PIDM_CODE) INNER JOIN INVDBMGR.DEPT ON LOCATIONS.ASSET_DEPARTMENT_CODE = DEPT.DEPARTMENT_CODE) INNER JOIN INVDBMGR.ASSET_CATEGORIES ON ASSETS.ASSET_CATEGORY_CODE = ASSET_CATEGORIES.ASSET_CATEGORY_CODE) INNER JOIN INVDBMGR.COMPONENTS ON ASSETS.ASSET_ID = COMPONENTS.ASSET_ID) INNER JOIN INVDBMGR.IP_TABLE ON COMPONENTS.COMPONENT_MAC_ADDRESS = IP_TABLE.IP_MAC_ADDRESS
-	WHERE (((${field}) Like '%${item}%'))`;
+  FROM INVDBMGR.VWSEARCH2 ${joinNetTable}
+  WHERE (((${field}) Like '%${item}%'))`;
 
   try {
     connection = await oracledb.getConnection(dbConfig);
     const result = await connection.execute(query);
-    console.log(result.rows);
     return result.rows;
   } catch (err) {
-    console.error(err);
-    return null;
+    return console.error(err);
   } finally {
     if (connection) {
       try {

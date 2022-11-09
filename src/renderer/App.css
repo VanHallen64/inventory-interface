@@ -33,18 +33,41 @@ body {
   grid-area: main;
   position: relative;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: min-content 1fr;
   grid-template-rows: auto 1fr;
   grid-template-areas: 'sidebar header' 'sidebar main';
+  overflow-y: hidden;
 }
 
 /*** NAVBAR ***/
 .sidebar-menu {
-  align-items: flex-start;
   flex-direction: column;
   padding-top: 0;
   overflow-y: auto;
+  overflow-x: hidden;
   grid-area: sidebar;
+}
+
+.sidebar-menu-collapse.show {
+  width: 200px;
+  transition: width 2s;
+}
+
+.sidebar-menu-collapse:not(.show) {
+  transition: width 0.5s;
+  transition-timing-function: linear;
+}
+
+.sidebar-menu-collapse.show .sidebar-menu-nav-title {
+  display: inline-flex !important;
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.sidebar-menu-collapse:not(.show) .sidebar-menu-nav-title {
+  display: inline-flex !important;
+  opacity: 0;
+  transition: opacity 0.5s;
 }
 
 .sidebar-menu-header {
@@ -53,27 +76,49 @@ body {
 
 .sidebar-menu-body {
   padding: 0;
+  overflow-x: hidden;
+  position: relative;
+  top: 50px;
+}
+
+.sidebar-menu-nav {
+  gap: 30px;
+}
+
+.sidebar-menu-nav-link {
+  display: inline-flex !important; /* fixes jump when showing navbar */
+  transition: 0.3s !important;
+}
+
+.sidebar-menu-nav-link:hover {
+  color: rgb(60, 60, 60) !important;
 }
 
 .unselected {
-  color: black;
+  color: rgb(120, 120, 120) !important;
 }
 
 .selected {
-  color: rgb(203, 203, 203);
+  color: rgb(55, 55, 55) !important;
 }
 
 /*** SECTIONS ***/
 .block {
   display: block;
   border: 1px solid lightgray;
-  height: 200px;
+  height: auto;
   background: white;
   border-radius: 8px;
   padding: 20px;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 #search-bar {
+  display: flex;
+}
+
+form {
   display: flex;
 }
 
